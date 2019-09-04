@@ -1,0 +1,14 @@
+syntax = "proto3";
+option csharp_namespace = "test1";
+option cc_enable_arenas = true;
+package icModule;
+  
+  
+message  Person {
+    string Name =1;
+    int32 Id=2;
+    string Email=3;
+	repeated double Points = 4;
+	repeated Person Subscribers = 5;
+	
+};

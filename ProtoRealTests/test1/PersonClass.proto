@@ -1,0 +1,11 @@
+syntax = "proto3";
+option csharp_namespace = "PersonNamespace";
+option cc_enable_arenas = true;
+package icModule;
+
+message Person {
+  
+    int32 Id=2;
+  
+};
+

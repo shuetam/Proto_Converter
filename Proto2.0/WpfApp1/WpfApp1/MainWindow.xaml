@@ -1,0 +1,247 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        
+        mc:Ignorable="d"
+        Title="Proto comparator" Height="700" Width="1000">
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox x:Name="groupBox"  Grid.Row="0" Grid.Column="0"  Header="Data from Protos1"  Margin="10,0,5,0" Padding="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+            <Grid HorizontalAlignment="Stretch" Name="LeftTreeView">
+                <!--<TreeViewItem x:Name="treeViewLeft" TreeViewItem.Expanded="ExpandedL" TreeViewItem.Collapsed="ExpandedL" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+
+                <ScrollViewer 
+            Name="_viewer1"
+            ScrollChanged="scroll1"
+            HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+            Grid.Column="0" Margin="10">
+
+                    <!--LeftTreeView-->
+                    <Grid Margin="10" Grid.Column="0"  PreviewMouseWheel="PreviewMouseWheel1"  >
+                        <Grid Grid.IsSharedSizeScope="True">
+                            <Grid.RowDefinitions >
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TreeViewItem Grid.Row="0" BorderThickness="1" >
+                                <TreeViewItem.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="155" />
+                                            <ColumnDefinition SharedSizeGroup="Value"  Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Property"/>
+                                        <TextBlock Grid.Column="1"  Padding="0"/>
+                                        <TextBlock Grid.Column="2" Text="Value"/>
+                                    </Grid>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+
+                            <TreeView Name="TreeViewL" Grid.Row="1" ItemsSource="{Binding Children}" BorderBrush="Gray" BorderThickness="0,1,0,0" >
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="TreeViewItem">
+                                        <Setter  Property="IsExpanded" Value="{Binding SubItemExpanded, Mode=TwoWay}"/>
+
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                                <TreeView.ItemTemplate  >
+
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+
+                                        <Grid    Background="{Binding SubItemBackground}" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition SharedSizeGroup="Property" Width="190"/>
+                                                <ColumnDefinition SharedSizeGroup="Togle" Width="5"/>
+                                                <ColumnDefinition SharedSizeGroup="Value" Width="120"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--<Image Name="icon1" Width="20" Source="G:\Proto\WpfApp1\icon1.jpg"/>-->
+                                            <TextBlock  Grid.Column="0" TextWrapping="Wrap" Text="{Binding propertyName}" Background="{Binding SubItemBackground}" Margin="0,0,0,0"/>
+                                            <TextBlock   Grid.Column="2" Text="{Binding value}" TextWrapping="Wrap" Background="{Binding SubItemBackground}" HorizontalAlignment="Left"/>
+
+                                        </Grid>
+
+                                        <HierarchicalDataTemplate.ItemTemplate>
+                                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+
+                                                <Grid Background="{Binding SubItemBackground}" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition SharedSizeGroup="Property"/>
+                                                        <ColumnDefinition SharedSizeGroup="Togle" />
+                                                        <ColumnDefinition SharedSizeGroup="Value" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding propertyName}" Background="{Binding SubItemBackground}" Margin="0,0,0,0"/>
+                                                    <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{Binding value}" Background="{Binding SubItemBackground}" HorizontalAlignment="Left"/>
+                                                </Grid>
+
+                                                <HierarchicalDataTemplate.ItemTemplate>
+                                                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+
+                                                        <Grid Background="{Binding SubItemBackground}" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition SharedSizeGroup="Property"/>
+                                                                <ColumnDefinition SharedSizeGroup="Togle"/>
+                                                                <ColumnDefinition SharedSizeGroup="Value"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding propertyName}" Background="{Binding SubItemBackground}" />
+                                                            <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{Binding value}" Background="{Binding SubItemBackground}" HorizontalAlignment="Left" />
+                                                        </Grid>
+                                                    </HierarchicalDataTemplate>
+                                                </HierarchicalDataTemplate.ItemTemplate>
+                                            </HierarchicalDataTemplate>
+                                        </HierarchicalDataTemplate.ItemTemplate>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                        </Grid>
+
+                    </Grid>
+
+                </ScrollViewer>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Grid.Row="0" Grid.Column="1" Header="Data from Protos2"  Margin="5,0,10,0"    Padding="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+
+            <Grid  HorizontalAlignment="Stretch"  Name="RightTreeView"  >
+
+                <ScrollViewer
+            x:Name="_viewer2"
+            ScrollChanged="scroll2"
+             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10">
+
+                    <!--RightTreeView-->
+                    <Grid Margin="10" Grid.Column="0" PreviewMouseWheel="PreviewMouseWheel2">
+                        <Grid Grid.IsSharedSizeScope="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TreeViewItem Grid.Row="0" BorderThickness="1" >
+                                <TreeViewItem.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="155" />
+                                            <ColumnDefinition  SharedSizeGroup="Value" Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Property"/>
+                                        <TextBlock Grid.Column="1" Padding="0"/>
+                                        <TextBlock Grid.Column="2" Text="Value"/>
+                                    </Grid>
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+
+                            <TreeView x:Name="TreeViewR" Grid.Row="1" ItemsSource="{Binding Children}" BorderBrush="Gray" BorderThickness="0,1,0,0" >
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter  Property="IsExpanded" Value="{Binding SubItemExpanded, Mode=TwoWay}"/>
+
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                                <TreeView.ItemTemplate  >
+
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+
+
+                                        <Grid Background="{Binding SubItemBackground}"  >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition SharedSizeGroup="Property" Width="190"/>
+                                                <ColumnDefinition SharedSizeGroup="Togle" Width="5"/>
+                                                <ColumnDefinition SharedSizeGroup="Value" Width="120"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock  Grid.Column="0" TextWrapping="Wrap" Text="{Binding propertyName}" Background="{Binding SubItemBackground}" Margin="0,0,0,0"/>
+                                            <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{Binding value}" Background="{Binding SubItemBackground}" />
+
+                                        </Grid>
+
+                                        <HierarchicalDataTemplate.ItemTemplate>
+                                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+
+                                                <Grid Background="{Binding SubItemBackground}" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition SharedSizeGroup="Property"/>
+                                                        <ColumnDefinition SharedSizeGroup="Togle"/>
+                                                        <ColumnDefinition SharedSizeGroup="Value"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding propertyName}" Background="{Binding SubItemBackground}" Margin="0,0,0,0"/>
+                                                    <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{Binding value}" Background="{Binding SubItemBackground}" />
+                                                </Grid>
+
+                                                <HierarchicalDataTemplate.ItemTemplate>
+                                                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+
+                                                        <Grid Background="{Binding SubItemBackground}" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition SharedSizeGroup="Property"/>
+                                                                <ColumnDefinition SharedSizeGroup="Togle"/>
+                                                                <ColumnDefinition SharedSizeGroup="Value"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding propertyName}" Background="{Binding SubItemBackground}" Margin="0,0,0,0"/>
+                                                            <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{Binding value}" Background="{Binding SubItemBackground}" />
+                                                        </Grid>
+
+                                                    </HierarchicalDataTemplate>
+                                                </HierarchicalDataTemplate.ItemTemplate>
+                                            </HierarchicalDataTemplate>
+                                        </HierarchicalDataTemplate.ItemTemplate>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                        </Grid>
+
+                    </Grid>
+
+                </ScrollViewer>
+
+            </Grid>
+
+        </GroupBox>
+
+
+        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Files generation" VerticalAlignment="Bottom" Padding="0,15,0,0" Margin="10,20,10,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition  Width="Auto"/>
+                    <ColumnDefinition  Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!--<Label Grid.Column="1" Grid.Row="1"  x:Name="labelClass" Content="Generated Classes:" />-->
+                <ComboBox Grid.Column="1" Grid.Row="1" x:Name="comboBoxClasses"  IsEditable="True" IsReadOnly="True" Text="Please Select Class" SelectionChanged="ChooseClass" Height="0" Width="250" Grid.ColumnSpan="2"    />
+                <Button Grid.Column="0" Grid.Row="0" x:Name="ChooseProtoFilesButton" Content="Select Proto Files"  Click="ChooseProtoFiles" Height="30" Width="150" Margin="10,0,10,10"/>
+                <Button Grid.Column="0" Grid.Row="1" x:Name="GenerateClassesButton" IsEnabled="false" Content="Generate  Classes -&gt;"  Click="GenerateProtoClasses"  Height="30" Width="150" Margin="10,0,10,10"/>
+
+                <Button Grid.Column="1" Grid.Row="0" x:Name="buttonProtos1" IsEnabled="False" Content="Select Data File 1"  Click="OpenProtos1"  Height="30" Width="150" Margin="10,0,10,10"/>
+                <Button Grid.Column="2" Grid.Row="0" x:Name="buttonProtos2" IsEnabled="False" Content="Select Data File 2" Click="OpenProtos2"  Height="30" Width="150" Margin="10,0,10,10"/>
+                <Label x:Name="labelReady" Content="" FontSize="16" Foreground="Red" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1"/>
+            
+            
+            </Grid>
+
+        </GroupBox>
+
+    </Grid>
+</Window>

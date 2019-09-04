@@ -1,0 +1,108 @@
+syntax = "proto3";
+option csharp_namespace = "Module.STRENOOX.CalcFEMRoot.ResultFEModel";
+option cc_enable_arenas = true;
+package icFEM;
+
+message IC_ResultFENodeDescProto{
+	int32 Id = 1;
+	int32 Type = 2;
+	double CoordX = 3;
+	double CoordY = 4;
+	double CoordZ = 5;
+};
+
+message IC_ResultFEElementProto{
+	int32 Id = 1;
+	int32 Type = 2;
+	double Length = 3;
+	repeated int32 Nodes = 4;
+	double Base1_X = 5;
+	double Base1_Y = 6;
+	double Base1_Z = 7;
+	double Base2_X = 8;
+	double Base2_Y = 9;
+	double Base2_Z = 10;
+	double Base3_X = 11;
+	double Base3_Y = 12;
+	double Base3_Z = 13;
+	double Origin_X = 14;
+	double Origin_Y = 15;
+	double Origin_Z = 16;
+};
+
+message IC_ResultFEBarProto{
+	int32 Id = 1;
+	int32 MacroElementId = 2;
+	double Distance1 = 3;
+	double Distance2 = 4;
+	repeated double FXPolynominal = 5;
+	repeated double MXPolynominal = 6;
+	repeated double UXPolynominal = 7;
+	repeated double RXPolynominal = 8;
+	repeated double FYMZPolynominal = 9;
+	repeated double UYRZPolynominal = 10;
+	repeated double FZMYPolynominal = 11;
+	repeated double UZRYPolynominal= 12;
+};
+
+message IC_ResultFENodeProto{
+	int32 Id = 1;
+	repeated double Data = 2;
+};
+
+message IC_ResultFESupportProto{
+	int32 Id = 1;
+	repeated double Data = 2;
+};
+
+message IC_ResultFESolidProto{
+	int32 Id = 1;
+	int32 Type = 2;
+	int32 MacroElementId = 3;
+	double CoordX = 4;
+	double CoordY = 5;
+	double CoordZ = 6;
+	repeated double Data = 7;
+};
+
+message IC_ResultFEPanelProto{
+	int32 Id = 1;
+	int32 MacroElementId = 2;
+	double CoordX = 3;
+	double CoordY = 4;
+	double CoordZ = 5;
+	repeated double Data = 6;
+};
+
+message IC_ResultFEDSCProto{
+	int32 Id = 1;
+	repeated double Data = 2;
+};
+
+message IC_ResultFECaseProto{
+	int32 CaseId = 1;
+	double TimeStep = 2;
+
+	repeated IC_ResultFEBarProto ResultBars = 3;
+	repeated IC_ResultFENodeProto ResultNodes = 4;
+	repeated IC_ResultFESolidProto ResultSolids = 5;
+	repeated IC_ResultFESupportProto ResultSupports = 6;
+	repeated IC_ResultFEPanelProto ResultPanels = 7;
+	repeated IC_ResultFEDSCProto ResultDSCs = 8;
+};
+
+message IC_ResultFEProto{
+	int32 NodeSize = 1;
+	int32 SuppSize = 2;
+	int32 BarSize = 3;
+	int32 PanelSize = 4;
+	int32 SolidSize = 5;
+
+	repeated IC_ResultFEElementProto ResultElements = 6;
+	repeated IC_ResultFENodeDescProto ResultNodes= 7;
+};
+
+message IC_ResultFEUtilityProto {
+	IC_ResultFEProto ResultInfo = 1;
+	repeated IC_ResultFECaseProto ResultCases = 2;
+};	

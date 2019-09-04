@@ -1,0 +1,32 @@
+syntax = "proto3";
+option csharp_namespace = "HFAN.Module.Static";
+option cc_enable_arenas = true;
+package icModule;
+
+message IC_AnnNeuronProto 
+	repeated double Weights = 1;
+};
+
+message IC_AnnLayerProto{
+	string ActivationFunction = 1;
+	double DropOut = 2;
+	repeated IC_AnnNeuronProto Neurons = 3;
+	repeated double Biases = 4;
+};
+
+message IC_AnnDataProto {
+	string Engine = 1;
+	string Normalization = 2;
+	int32 NInput = 3;
+	int32 NOutput = 4;
+	double LearningRate = 5;
+	int32 BatchSize = 6;
+	int32 EpochSize = 7;
+	string Optimizer = 8;
+	string LossFunc = 9;
+	repeated double MaxV = 10;
+	repeated double MinV = 11;
+	repeated double MeanV = 12;
+	repeated double StdV = 13;
+	repeated IC_AnnLayerProto Layers = 14;
+};
